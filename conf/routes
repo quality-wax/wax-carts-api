@@ -1,0 +1,82 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Swagger API
+GET         /swagger.json                                                   controllers.ApiHelpController.getResources
+
+# Home page
+GET         /                                                               controllers.ApplicationController.index
+
+# Authentication
+POST        /api/v1/auth/login                                              controllers.CredentialsAuthController.authenticate
+POST        /api/v1/auth/signup                                             controllers.SignUpController.signUp
+POST        /api/v1/auth/forgotPassword/send/:userName                      controllers.ForgotPasswordController.send(userName: String)
+POST        /api/v1/auth/forgotPassword/reset/:token                        controllers.ForgotPasswordController.reset(token: String)
+GET         /api/v1/auth/authenticate/:provider                             controllers.SocialAuthController.authenticate(provider)
+
+# User
+GET         /api/v1/user                                                    controllers.UserController.user
+POST        /api/v1/user/changePassword                                     controllers.UserController.changePassword
+POST        /api/v1/user/update                                             controllers.UserController.update
+GET         /api/v1/user/logout                                             controllers.UserController.logout
+
+# Verification
+GET         /api/v1/account/email/:userName                                 controllers.ActivateAccountController.send(userName: String)
+GET         /api/v1/account/activate/:token                                 controllers.ActivateAccountController.activate(token: String)
+
+# Order
+POST        /api/v1/checkout                                                controllers.OrderController.checkout
+POST        /api/v1/contact                                                 controllers.OrderController.contact
+
+# Blog
+POST        /api/v1/post                                                    controllers.BlogController.savePost
+DELETE      /api/v1/post/:id                                                controllers.BlogController.deletePost(id: String)
+POST        /api/v1/post/:id                                                controllers.BlogController.updatePost(id: String)
+GET         /api/v1/post/:id                                                controllers.BlogController.getPost(id: String)
+
+
+GET         /api/v1/posts/status/:status                                    controllers.BlogController.getPostsWithStatus(status: String)
+GET         /api/v1/posts/published                                         controllers.BlogController.getPublishedPosts
+GET         /api/v1/posts/published/page/:pageNumber                        controllers.BlogController.getPaginatedPublishedPosts(pageNumber: Int)
+GET         /api/v1/posts/draft                                             controllers.BlogController.getDraftPosts
+
+POST        /api/v1/post/:id/comment                                        controllers.BlogController.saveComment(id: String)
+POST        /api/v1/post/comment/:id                                        controllers.BlogController.updateComment(id: String)
+DELETE      /api/v1/post/comment/:id                                        controllers.BlogController.deleteComment(id: String)
+GET         /api/v1/post/comment/:id                                        controllers.BlogController.getComment(id: String)
+
+GET         /api/v1/post/:id/comments/published                             controllers.BlogController.getPublishedPostComments(id: String)
+GET         /api/v1/post/:id/comments/draft                                 controllers.BlogController.getDraftPostComments(id: String)
+GET         /api/v1/post/:id/comments/status/:status                        controllers.BlogController.getPostCommentsWithStatus(id: String, status: String)
+
+# Product
+POST        /api/v1/product                                                 controllers.ProductController.createProduct
+POST        /api/v1/product/:id                                             controllers.ProductController.updateProduct(id: String)
+DELETE      /api/v1/product/:id                                             controllers.ProductController.deleteProduct(id: String)
+GET         /api/v1/product/:id                                             controllers.ProductController.getProduct(id: String)
+
+GET         /api/v1/products                                                controllers.ProductController.getAllProducts
+GET         /api/v1/products/page/:pageNumber                               controllers.ProductController.getPaginatedProducts(pageNumber: Int)
+
+POST        /api/v1/product/:id/review                                      controllers.ProductController.addReview(id: String)
+POST        /api/v1/product/review/:id                                      controllers.ProductController.updateReview(id: String)
+DELETE      /api/v1/product/review/:id                                      controllers.ProductController.deleteReview(id: String)
+GET         /api/v1/product/review/:id                                      controllers.ProductController.getReview(id: String)
+
+GET         /api/v1/product/:id/reviews/status/:status                      controllers.ProductController.getReviewsWithStatus(id: String, status: String)
+GET         /api/v1/product/:id/reviews/draft                               controllers.ProductController.getDraftProductReviews(id: String)
+GET         /api/v1/product/:id/reviews/published                           controllers.ProductController.getPublishedProductReviews(id: String)
+
+# Testimonials
+POST        /api/v1/testimonial                                             controllers.TestimonialController.createTestimonial
+POST        /api/v1/testimonial/:id                                         controllers.TestimonialController.updateTestimonial(id: String)
+DELETE      /api/v1/testimonial/:id                                         controllers.TestimonialController.deleteTestimonial(id: String)
+GET         /api/v1/testimonial/:id                                         controllers.TestimonialController.getTestimonial(id: String)
+
+GET         /api/v1/testimonials/published                                  controllers.TestimonialController.getPublishedTestimonials
+GET         /api/v1/testimonials/draft                                      controllers.TestimonialController.getDraftTestimonials
+GET         /api/v1/testimonials                                            controllers.TestimonialController.getTestimonials
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                                                   controllers.Assets.versioned(path="/public", file: Asset)

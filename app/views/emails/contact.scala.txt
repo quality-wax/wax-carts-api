@@ -1,0 +1,2 @@
+
+@(checkout: models.core.Contact)
